@@ -1,0 +1,196 @@
+/* 
+Dashboard Custom Styles
+Cor de fundo: #E6E6FA (Lavender)
+*/
+
+/* Cor de fundo principal - múltiplos seletores para compatibilidade */
+.stApp,
+.main,
+.block-container,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+.css-1d391kg,
+.css-18e3th9,
+.css-1lcbmhc,
+.css-1outpf7 {
+    background-color: #E6E6FA !important;
+}
+
+/* Cor de fundo da sidebar */
+.css-1d391kg,
+.css-17eq0hr,
+.css-1lcbmhc,
+[data-testid="stSidebar"],
+.sidebar .sidebar-content {
+    background-color: #E6E6FA !important;
+}
+
+/* Força cor de fundo em todos os containers */
+.stContainer,
+.element-container,
+.stMarkdown,
+.stColumns,
+.stColumn {
+    background-color: transparent !important;
+}
+
+/* Elementos de input mantêm fundo branco para legibilidade */
+.stSelectbox > div > div,
+.stTextInput > div > div > input,
+.stNumberInput > div > div > input,
+.stTextArea > div > div > textarea,
+.stFileUploader > div,
+.stSlider > div > div > div > div {
+    background-color: white !important;
+    border: 1px solid #ddd !important;
+}
+
+/* Estilo do cabeçalho principal */
+.main-header {
+    color: #4B0082 !important;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Métricas com fundo branco */
+.metric-container,
+[data-testid="metric-container"],
+.css-1xarl3l {
+    background-color: white !important;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 0.5rem 0;
+}
+
+/* DataFrames com fundo branco */
+.stDataFrame,
+.dataframe,
+[data-testid="stDataFrame"] {
+    background-color: white !important;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Gráficos com fundo branco */
+.js-plotly-plot,
+.plotly,
+[data-testid="stPlotlyChart"] {
+    background-color: white !important;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Expanders e outros elementos */
+.streamlit-expanderHeader,
+.streamlit-expanderContent,
+[data-testid="stExpander"] {
+    background-color: white !important;
+    border-radius: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+/* Botões */
+.stButton > button {
+    background-color: #4B0082 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: bold !important;
+}
+
+.stButton > button:hover {
+    background-color: #6A0DAD !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+
+/* Alertas e mensagens */
+.stAlert,
+.stSuccess,
+.stError,
+.stWarning,
+.stInfo {
+    border-radius: 0.5rem !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    background-color: white !important;
+    border-radius: 0.5rem !important;
+}
+
+/* Força aplicação em elementos específicos */
+html, body {
+    background-color: #E6E6FA !important;
+}
+
+/* Sidebar específica */
+.css-1d391kg .css-1v0mbdj {
+    background-color: #E6E6FA !important;
+}
+
+/* Container principal */
+.css-18e3th9 {
+    background-color: #E6E6FA !important;
+}
+
+/* Elementos específicos do Streamlit */
+.stMarkdown {
+    background-color: transparent !important;
+}
+
+/* Radio buttons e checkboxes */
+.stRadio > div,
+.stCheckbox > div {
+    background-color: transparent !important;
+}
+
+/* Selectbox dropdown */
+.stSelectbox [data-baseweb="select"] {
+    background-color: white !important;
+}
+
+/* File uploader */
+.stFileUploader section {
+    background-color: white !important;
+    border-radius: 0.5rem !important;
+}
+
+/* Progress bars */
+.stProgress > div > div {
+    background-color: #4B0082 !important;
+}
+
+/* Spinner */
+.stSpinner > div {
+    border-top-color: #4B0082 !important;
+}
+
+/* Métricas específicas */
+[data-testid="metric-container"] > div {
+    background-color: white !important;
+    border-radius: 0.5rem !important;
+    padding: 1rem !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* Ajustes para elementos flutuantes */
+.stTooltipHoverTarget {
+    background-color: white !important;
+}
+
+/* Ajustes para modals */
+.stModal {
+    background-color: #E6E6FA !important;
+}
+
+/* Ajustes para popover */
+.stPopover {
+    background-color: white !important;
+    border-radius: 0.5rem !important;
+}
