@@ -7,7 +7,6 @@ from datetime import datetime
 import sys
 import os
 
-# Adiciona o diretório raiz ao path
 project_root = os.path.dirname(os.path.dirname(__file__))
 if project_root not in sys.path:
     sys.path.append(project_root)
@@ -73,14 +72,12 @@ class TestRule:
     
     def test_rule_error_handling(self):
         """Testa tratamento de erro na avaliação."""
-        # Condição que gera erro
         condition = lambda t: t['nonexistent_key'] > 1000
         rule = Rule("error_rule", "Regra com erro", condition)
         
         transaction = {'amount': 1500}
         result = rule.evaluate(transaction)
         
-        # Deve retornar False em caso de erro
         assert result == False
         assert rule.triggered_count == 0
     
@@ -111,7 +108,7 @@ class TestBusinessRulesEngine:
         assert self.engine is not None
         assert hasattr(self.engine, 'rules')
         assert hasattr(self.engine, 'config')
-        assert len(self.engine.rules) > 0  # Deve ter regras padrão
+        assert len(self.engine.rules) > 0
     
     def test_add_rule(self):
         """Testa adição de nova regra."""
@@ -127,14 +124,12 @@ class TestBusinessRulesEngine:
         
         assert len(self.engine.rules) == initial_count + 1
         
-        # Verifica se a regra foi adicionada corretamente
         new_rule = self.engine.rules[-1]
         assert new_rule.name == "very_high_amount"
         assert new_rule.action == "block"
     
     def test_remove_rule(self):
         """Testa remoção de regra."""
-        # Adiciona uma regra para remover
         condition = lambda t: t.get('amount', 0) > 5000
         self.engine.add_rule("test_rule", "Teste", condition)
         
@@ -144,26 +139,21 @@ class TestBusinessRulesEngine:
         assert result == True
         assert len(self.engine.rules) == initial_count - 1
         
-        # Tenta remover regra inexistente
         result = self.engine.remove_rule("nonexistent_rule")
         assert result == False
     
     def test_enable_disable_rule(self):
         """Testa ativação e desativação de regras."""
-        # Adiciona uma regra
         condition = lambda t: t.get('amount', 0) > 5000
         self.engine.add_rule("test_rule", "Teste", condition)
         
-        # Desabilita
         result = self.engine.disable_rule("test_rule")
         assert result == True
         
-        # Verifica se foi desabilitada
         rule = next((r for r in self.engine.rules if r.name == "test_rule"), None)
         assert rule is not None
         assert rule.enabled == False
         
-        # Habilita novamente
         result = self.engine.enable_rule("test_rule")
         assert result == True
         assert rule.enabled == True
@@ -190,10 +180,10 @@ class TestBusinessRulesEngine:
         """Testa avaliação de transação que aciona regras."""
         transaction = {
             'transaction_id': 'test_002',
-            'amount': 15000.0,  # Valor alto
+            'amount': 15000.0,
             'merchant_category': 'online',
-            'country': 'XX',  # País suspeito
-            'transaction_hour': 3,  # Horário suspeito
+            'country': 'XX',
+            'transaction_hour': 3,
             'is_weekend': True
         }
         
@@ -215,7 +205,7 @@ class TestBusinessRulesEngine:
             },
             {
                 'transaction_id': 'batch_002',
-                'amount': 20000.0,  # Alto valor
+                'amount': 20000.0,
                 'country': 'BR',
                 'transaction_hour': 14
             }
@@ -269,7 +259,6 @@ class TestBusinessRulesEngine:
     
     def test_custom_rule_operators(self):
         """Testa diferentes operadores de regras customizadas."""
-        # Testa operador 'equals'
         rule_def = {
             'name': 'equals_test',
             'description': 'Teste equals',
@@ -282,7 +271,6 @@ class TestBusinessRulesEngine:
         result = self.engine.create_custom_rule(rule_def)
         assert result == True
         
-        # Testa operador 'in'
         rule_def = {
             'name': 'in_test',
             'description': 'Teste in',
