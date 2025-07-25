@@ -27,20 +27,11 @@ O sistema oferece uma interface web completa e intuitiva através de um dashboar
 
 ![Tela Principal](images/image_1.png)
 
-- Verificação de dependências concluída
-Todas as bibliotecas necessárias (Streamlit, Pandas, NumPy, Plotly, Scikit-learn) estão instaladas.
-
-- Arquivos de dados localizados com sucesso
-Os arquivos .csv e .json exigidos pelo dashboard foram encontrados na pasta data/.
-
-- Dashboard iniciado com sucesso via Streamlit
-O comando streamlit run src/dashboard/app.py foi executado corretamente.
-
-- Acesso local ao dashboard
-O dashboard foi aberto automaticamente no navegador em http://localhost:8501.
-
-- Documentação disponível
-A documentação técnica está localizada em docs/TECHNICAL_DOCUMENTATION.md.
+- Verificação de dependências concluída: Todas as bibliotecas necessárias (Streamlit, Pandas, NumPy, Plotly, Scikit-learn) estão instaladas.
+- Arquivos de dados localizados com sucesso: Os arquivos .csv e .json exigidos pelo dashboard foram encontrados na pasta data/.
+- Dashboard iniciado com sucesso via Streamlit: O comando streamlit run src/dashboard/app.py foi executado corretamente.
+- Acesso local ao dashboard: O dashboard foi aberto automaticamente no navegador em http://localhost:8501.
+- Documentação disponível: A documentação técnica está localizada em docs/TECHNICAL_DOCUMENTATION.md.
 
 ### 2. Dashboard de Monitoramento em Tempo Real
 
