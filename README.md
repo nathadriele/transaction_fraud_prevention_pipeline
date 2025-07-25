@@ -23,7 +23,7 @@ Este sistema está sendo desenvolvido para detectar e prevenir fraudes em transa
 
 O sistema oferece uma interface web completa e intuitiva através de um dashboard Streamlit. Abaixo estão as principais telas e funcionalidades:
 
-### 1. Tela Principal - Visão Geral do Sistema
+### 1. Execução
 
 ![Tela Principal](images/image_1.png)
 
