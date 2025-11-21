@@ -1,67 +1,58 @@
-# Arquivo de Configuração de Exemplo
-# Copie este arquivo para config.yaml e ajuste conforme necessário
+# Arquivo de configuração de exemplo.
+# Copie para config.yaml e ajuste conforme necessário.
 
-# IMPORTANTE: Este é um arquivo de exemplo
-# Copie para config.yaml: cp config/config.example.yaml config/config.yaml
-
-# Configurações de Dados
 data:
   raw_data_path: "data/raw/"
   processed_data_path: "data/processed/"
   synthetic_data_path: "data/synthetic/"
-  
+
   synthetic:
-    n_samples: 10000  # Reduzido para exemplo
+    n_samples: 10000      # Exemplo: volume reduzido para ambiente de dev/demo
     fraud_rate: 0.02
     random_seed: 42
-    
+
   preprocessing:
     test_size: 0.2
     validation_size: 0.1
     stratify: true
     random_state: 42
 
-# Configurações de Modelos (simplificadas para exemplo)
 models:
   supervised:
     random_forest:
-      n_estimators: 50  # Reduzido para exemplo
+      n_estimators: 50    # Exemplo: menor para treino mais rápido
       max_depth: 5
       random_state: 42
-      
+
   unsupervised:
     isolation_forest:
       contamination: 0.02
       random_state: 42
 
-# Configurações de Avaliação
 evaluation:
   metrics:
     - precision
     - recall
     - f1_score
     - roc_auc
-    
+
   thresholds:
     default_threshold: 0.5
 
-# Configurações de Regras de Negócio
 business_rules:
   amount_rules:
-    max_single_transaction: 5000  # Reduzido para exemplo
+    max_single_transaction: 5000
     max_daily_amount: 20000
-    
+
   velocity_rules:
     max_transactions_per_hour: 20
 
-# Configurações do Dashboard
 dashboard:
   title: "Sistema de Prevenção de Fraudes - DEMO"
   theme: "light"
   cache_ttl: 60
 
-# Configurações de Logging
 logging:
-  level: "DEBUG"  # Mais verboso para desenvolvimento
+  level: "DEBUG"
   format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
   file: "logs/fraud_detection_dev.log"
