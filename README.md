@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)]()
 
-Uma solução de detecção e prevenção de fraudes em transações financeiras, combinando Machine Learning, regras de negócio e análises estatísticas avançadas. O sistema oferece um dashboard interativo para monitoramento em tempo real, análise de dados e gestão de alertas de fraude.
+O projeto, além de ter como intuito principal o aprendizado e a realização de testes, também busca oferecer uma solução completa para detecção e prevenção de fraudes em transações financeiras, integrando Machine Learning, regras de negócio e análises estatísticas avançadas. A solução inclui um dashboard interativo para monitoramento em tempo real, análise exploratória e gestão de alertas.
 
 ## Sobre o Projeto
 
