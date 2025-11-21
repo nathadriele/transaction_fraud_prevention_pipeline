@@ -1,10 +1,17 @@
-## Sistema de Prevenção de Fraudes Transacionais v.1.0.0
+## Sistema de Prevenção de Fraudes Transacionais v.1.0.1
 
-[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)](https://streamlit.io)
-[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://docker.com)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)]()
+![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)
+![Scikit-Learn](https://img.shields.io/badge/scikit--learn-ML-orange.svg)
+![XGBoost](https://img.shields.io/badge/XGBoost-Gradient%20Boosting-blue.svg)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-DL-orange.svg)
+![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)
+![PyTest](https://img.shields.io/badge/PyTest-Testing-green.svg)
+![Plotly](https://img.shields.io/badge/Plotly-Interactive%20Charts-purple.svg)
+![Data Pipeline](https://img.shields.io/badge/Data%20Pipeline-Real--Time-lightgrey.svg)
+![Fraud Detection](https://img.shields.io/badge/Fraud%20Detection-Active-critical.svg)
+![MIT License](https://img.shields.io/badge/License-MIT-green.svg)
+![Status](https://img.shields.io/badge/Status-In%20development-yellow.svg)
 
 O projeto, além de ter como intuito principal o aprendizado e a realização de testes, também busca oferecer uma solução completa para detecção e prevenção de fraudes em transações financeiras, integrando Machine Learning, regras de negócio e análises estatísticas avançadas. A solução inclui um dashboard interativo para monitoramento em tempo real, análise exploratória e gestão de alertas.
 
