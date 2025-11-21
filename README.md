@@ -137,11 +137,11 @@ A tela de configurações permite:
 ![Relatórios](images/image_11.png)
 
 Os relatórios incluem:
-- Métricas de performance detalhadas
-- Análise de falsos positivos e negativos
-- Tendências de longo prazo
-- Comparação entre períodos
-- Exportação de dados para análise externa
+- Métricas de performance detalhadas do modelo
+- Análise aprofundada de falsos positivos e falsos negativos
+- Identificação de tendências de longo prazo
+- Comparações entre diferentes períodos de observação
+- Exportação dos resultados para análises externas
 
 ### 12. Análise de Transações Individuais
 
@@ -159,11 +159,11 @@ A análise individual mostra:
 ![Dashboard Executivo](images/image_13.png)
 
 O dashboard executivo apresenta:
-- KPIs principais para gestão
-- Resumo de performance do sistema
-- Impacto financeiro da prevenção de fraudes
-- Tendências e projeções
-- Recomendações estratégicas
+- KPIs principais para suporte à gestão
+- Resumo consolidado da performance do sistema
+- Estimativa do impacto financeiro obtido na prevenção de fraudes
+- Tendências identificadas e projeções futuras
+- Recomendações estratégicas para tomada de decisão
 
 ### 14. Interface de Navegação e Menu
 
@@ -220,7 +220,7 @@ streamlit run src/dashboard/app.py
 
 **Dashboard disponível em: http://localhost:8501**
 
-## Arquitetura do Sistema
+## Arquitetura Básica do Sistema
 
 ```
 ├── src/                    # Código fonte principal
@@ -416,9 +416,9 @@ O sistema trabalha com os seguintes tipos de dados:
 ## Casos de Uso
 
 ### 1. Detecção em Tempo Real
-- Análise instantânea de transações
-- Bloqueio automático de fraudes
-- Notificações imediatas para equipes
+- Análise imediata de transações em execução
+- Bloqueio automático de atividades potencialmente fraudulentas
+- Notificações instantâneas para as equipes responsáveis
 
 ### 2. Análise Investigativa
 - Investigação de padrões suspeitos
@@ -457,9 +457,9 @@ O sistema trabalha com os seguintes tipos de dados:
 - Sugira soluções quando possível
 
 ### Status do Projeto
-- **Versão Atual**: 1.0.0
-- **Status**: Produção
-- **Última Atualização**: 24/07/2025
+- **Versão Atual**: 1.0.1
+- **Status**: Em atualização / manutenção
+- **Última Atualização**: 21/11/2025
 - **Próxima Release**: A definir
 
 ---
