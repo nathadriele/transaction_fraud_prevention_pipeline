@@ -79,11 +79,11 @@ class RealisticFraudDataGenerator:
         elif amount > 2000:
             value_factor = 1.2
         elif amount < 10:
-            value_factor = 1.3  # Micro-transações suspeitas
+            value_factor = 1.3
         else:
             value_factor = 1.0
         
-        # Fator temporal (madrugada mais suspeita)
+        # Fator temporal
         if 2 <= hour <= 5:
             time_factor = 1.8
         elif 22 <= hour <= 23 or 0 <= hour <= 1:
@@ -220,7 +220,6 @@ class RealisticFraudDataGenerator:
         
         df = pd.DataFrame(transactions)
         
-        # Ordena por timestamp
         df['timestamp'] = pd.to_datetime(df['timestamp'])
         df = df.sort_values('timestamp').reset_index(drop=True)
         df['timestamp'] = df['timestamp'].dt.strftime('%Y-%m-%d %H:%M:%S')
@@ -242,11 +241,9 @@ def main():
     """Função principal para gerar dados realistas."""
     generator = RealisticFraudDataGenerator()
     
-    # Gera dataset realista
     print("Gerando dataset realista...")
     df = generator.generate_realistic_dataset(n_transactions=1000, days_span=30)
     
-    # Estatísticas do dataset
     total_transactions = len(df)
     fraud_count = df['is_fraud'].sum()
     fraud_rate = (fraud_count / total_transactions) * 100
@@ -257,7 +254,6 @@ def main():
     print(f"- Taxa de fraude: {fraud_rate:.2f}%")
     print(f"- Período: {df['timestamp'].min()} a {df['timestamp'].max()}")
     
-    # Salva o dataset
     output_path = 'data/realistic_final_results.csv'
     df.to_csv(output_path, index=False)
     print(f"Dataset salvo em: {output_path}")
