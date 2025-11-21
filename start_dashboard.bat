@@ -3,18 +3,15 @@ title Sistema de Prevenção de Fraudes - Dashboard
 
 echo.
 echo ╔══════════════════════════════════════════════════════════════╗
-echo ║                                                              ║
-echo ║           SISTEMA DE PREVENÇÃO DE FRAUDES                   ║
-echo ║                                                              ║
-echo ║              Dashboard Interativo - Streamlit               ║
-echo ║                                                              ║
+echo ║               SISTEMA DE PREVENÇÃO DE FRAUDES                ║
+echo ║              Dashboard Interativo - Streamlit                ║
 echo ╚══════════════════════════════════════════════════════════════╝
 echo.
 
 echo Iniciando dashboard...
 echo.
 
-REM Verifica se Python está instalado
+:: Verifica Python
 python --version >nul 2>&1
 if errorlevel 1 (
     echo ERRO: Python não encontrado!
@@ -23,21 +20,18 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo OK: Python encontrado
+echo Python detectado
 echo.
 
-REM Executa o script de inicialização
-echo Executando script de inicialização...
+:: Executa dashboard
 python start_dashboard.py
-
 if errorlevel 1 (
     echo.
-    echo ERRO: Erro ao executar o dashboard
-    echo Verifique os logs acima para mais detalhes
+    echo ERRO: Falha ao iniciar o dashboard
     pause
     exit /b 1
 )
 
 echo.
-echo OK: Dashboard finalizado
+echo Dashboard encerrado
 pause
