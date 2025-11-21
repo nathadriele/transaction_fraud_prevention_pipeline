@@ -16,7 +16,7 @@ Este guia documenta o processo completo de deploy do Sistema de Prevenção de F
 #### Instalação Rápida
 ```bash
 # Clone o repositório
-git clone <repository-url>
+git clone https://github.com/nathadriele/transaction_fraud_prevention_pipeline
 cd transacional_fraud_prevention_pipeline
 
 # Instale dependências
@@ -34,7 +34,7 @@ start_dashboard.bat
 # Linux/Mac
 ./start_dashboard.sh
 
-# Python (multiplataforma)
+# Python
 python start_dashboard.py
 ```
 
@@ -58,7 +58,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia código fonte
 COPY . .
 
-# Expõe porta do Streamlit
+# Porta do Streamlit
 EXPOSE 8501
 
 # Comando de inicialização
