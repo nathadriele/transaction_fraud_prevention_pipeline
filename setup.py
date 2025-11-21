@@ -1,26 +1,30 @@
 """
-Setup script para o Sistema de Prevenção de Fraudes Transacionais
+Setup script para o Sistema de Prevenção de Fraudes Transacionais.
 """
 
 from setuptools import setup, find_packages
-import os
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 with open("requirements.txt", "r", encoding="utf-8") as fh:
-    requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
+    requirements = [
+        line.strip()
+        for line in fh
+        if line.strip() and not line.startswith("#")
+    ]
 
 setup(
     name="fraud-prevention-pipeline",
-    version="1.0.0",
-    author="Data Science Team",
-    author_email="fraud-prevention@company.com",
-    description="Sistema completo de prevenção de fraudes transacionais",
+    version="1.0.1",
+    author="Nathalia Adriele",
+    author_email="adriele.dataengineering@gmail.com",
+    description="Sistema completo de prevenção de fraudes transacionais com ML, regras de negócio e dashboard interativo.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/company/fraud-prevention-pipeline",
-    packages=find_packages(),
+    url="https://github.com/nathadriele/transaction_fraud_prevention_pipeline",
+    packages=find_packages("src"),
+    package_dir={"": "src"},
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
@@ -39,6 +43,7 @@ setup(
         "dev": [
             "pytest>=7.4.0",
             "pytest-cov>=4.1.0",
+            "pytest-mock>=3.11.0",
             "black>=23.7.0",
             "flake8>=6.0.0",
             "isort>=5.12.0",
@@ -54,13 +59,13 @@ setup(
             "boto3>=1.28.0",
             "google-cloud-storage>=2.10.0",
             "azure-storage-blob>=12.17.0",
-        ]
+        ],
     },
     entry_points={
         "console_scripts": [
-            "fraud-dashboard=src.dashboard.app:main",
-            "fraud-train=src.models.train:main",
-            "fraud-predict=src.models.predict:main",
+            "fraud-dashboard=dashboard.app:main",
+            "fraud-train=models.train:main",
+            "fraud-predict=models.predict:main",
         ],
     },
     include_package_data=True,
