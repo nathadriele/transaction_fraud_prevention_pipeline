@@ -58,8 +58,3 @@ pre-commit>=3.3.0
 # Jupyter
 jupyterlab>=4.0.0
 notebook>=7.0.0
-
-# Optional (instale somente se realmente usar)
-# boto3>=1.28.0
-# google-cloud-storage>=2.10.0
-# azure-storage-blob>=12.17.0
