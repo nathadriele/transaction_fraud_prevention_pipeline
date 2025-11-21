@@ -1,52 +1,64 @@
 # Makefile para Sistema de Prevenção de Fraudes
 
-.PHONY: help install install-dev setup clean test lint format dashboard train predict docs
+.PHONY: help install install-dev setup clean test test-quick lint format \
+        dashboard train predict generate-data eda jupyter docs \
+        docker-build docker-run quality-check deploy-staging deploy-production \
+        backup-models monitor install-all
 
 # Variáveis
-PYTHON := python
-PIP := pip
-STREAMLIT := streamlit
+PYTHON     := python
+PIP        := pip
+STREAMLIT  := streamlit
+DATE       := $(shell date +%Y%m%d)
 
 # Ajuda
 help:
 	@echo "Comandos disponíveis:"
-	@echo "  install      - Instala dependências básicas"
-	@echo "  install-dev  - Instala dependências de desenvolvimento"
-	@echo "  setup        - Configuração inicial do projeto"
-	@echo "  clean        - Remove arquivos temporários"
-	@echo "  test         - Executa testes"
-	@echo "  lint         - Executa linting"
-	@echo "  format       - Formata código"
-	@echo "  dashboard    - Inicia dashboard Streamlit"
-	@echo "  train        - Treina modelos"
-	@echo "  predict      - Executa predições"
-	@echo "  docs         - Gera documentação"
-	@echo "  jupyter      - Inicia Jupyter Lab"
+	@echo "  install         - Instala dependências básicas"
+	@echo "  install-dev     - Instala dependências de desenvolvimento"
+	@echo "  install-all     - Instala tudo e executa setup"
+	@echo "  setup           - Configuração inicial do projeto"
+	@echo "  clean           - Remove arquivos temporários"
+	@echo "  test            - Executa testes com coverage"
+	@echo "  test-quick      - Executa testes rápidos (sem coverage)"
+	@echo "  lint            - Executa linting (flake8, mypy)"
+	@echo "  format          - Formata código (black, isort)"
+	@echo "  dashboard       - Inicia dashboard Streamlit"
+	@echo "  train           - Treina modelos"
+	@echo "  predict         - Executa predições"
+	@echo "  generate-data   - Gera dados sintéticos"
+	@echo "  eda             - Executa análise exploratória"
+	@echo "  jupyter         - Inicia Jupyter Lab"
+	@echo "  docs            - Gera documentação com Sphinx"
+	@echo "  docker-build    - Build da imagem Docker"
+	@echo "  docker-run      - Executa container Docker"
+	@echo "  quality-check   - Lint + testes"
+	@echo "  backup-models   - Faz backup dos modelos"
+	@echo "  deploy-staging  - Deploy para ambiente de staging (exemplo)"
+	@echo "  deploy-production - Deploy para produção (exemplo)"
+	@echo "  monitor         - Inicia módulo de monitoramento"
 
 # Instalação
 install:
 	$(PIP) install -r requirements.txt
 
-install-dev:
-	$(PIP) install -r requirements.txt
+install-dev: install
 	$(PIP) install -e ".[dev]"
 
 # Configuração inicial
 setup: install
 	@echo "Configurando projeto..."
-	@if not exist config\config.yaml copy config\config.example.yaml config\config.yaml
-	@if not exist logs mkdir logs
+	@mkdir -p config logs
+	@test -f config/config.yaml || cp config/config.example.yaml config/config.yaml
 	@echo "Projeto configurado com sucesso!"
 
 # Limpeza
 clean:
 	@echo "Limpando arquivos temporários..."
-	@for /d /r . %%d in (__pycache__) do @if exist "%%d" rd /s /q "%%d"
-	@for /r . %%f in (*.pyc) do @if exist "%%f" del "%%f"
-	@for /r . %%f in (*.pyo) do @if exist "%%f" del "%%f"
-	@if exist .pytest_cache rd /s /q .pytest_cache
-	@if exist .coverage del .coverage
-	@if exist htmlcov rd /s /q htmlcov
+	@find . -type d -name "__pycache__" -exec rm -rf {} +
+	@find . -type f -name "*.pyc" -delete
+	@find . -type f -name "*.pyo" -delete
+	@rm -rf .pytest_cache .coverage htmlcov
 	@echo "Limpeza concluída!"
 
 # Testes
@@ -91,11 +103,11 @@ jupyter:
 # Documentação
 docs:
 	@echo "Gerando documentação..."
-	@if not exist docs\_build mkdir docs\_build
+	@mkdir -p docs/_build/html
 	sphinx-build -b html docs/ docs/_build/html
 	@echo "Documentação gerada em docs/_build/html/"
 
-# Docker (se aplicável)
+# Docker
 docker-build:
 	docker build -t fraud-prevention .
 
@@ -106,21 +118,21 @@ docker-run:
 quality-check: lint test
 	@echo "✅ Verificação de qualidade concluída!"
 
-# Deploy (exemplo)
+# Deploy
 deploy-staging:
 	@echo "Fazendo deploy para staging..."
-	# Adicionar comandos de deploy aqui
+	# Adicionar comandos reais de deploy aqui
 
 deploy-production:
 	@echo "Fazendo deploy para produção..."
-	# Adicionar comandos de deploy aqui
+	# Adicionar comandos reais de deploy aqui
 
 # Backup de modelos
 backup-models:
 	@echo "Fazendo backup dos modelos..."
-	@if not exist backups mkdir backups
-	@if exist models xcopy models backups\models_%date:~-4,4%%date:~-10,2%%date:~-7,2%\ /E /I /Y
-	@echo "✅ Backup concluído!"
+	@mkdir -p backups/models_$(DATE)
+	@if [ -d "models" ]; then cp -r models/* backups/models_$(DATE)/; fi
+	@echo "Backup concluído!"
 
 # Monitoramento
 monitor:
@@ -129,4 +141,4 @@ monitor:
 
 # Instalação completa
 install-all: install-dev setup
-	@echo "✅ Instalação completa finalizada!"
+	@echo "Instalação completa finalizada!"
