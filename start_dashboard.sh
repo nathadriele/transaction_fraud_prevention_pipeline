@@ -1,62 +1,43 @@
 #!/bin/bash
 
-# Script de inicialização do Dashboard de Prevenção de Fraudes
-# Para Linux/Mac
+# Script de inicialização do Dashboard (Linux/Mac)
 
-# Cores para output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+YELLOW='\033[1;33m'
+NC='\033[0m'
 
-# Banner
 echo -e "${BLUE}"
 echo "╔══════════════════════════════════════════════════════════════╗"
-echo "║                                                              ║"
 echo "║           SISTEMA DE PREVENÇÃO DE FRAUDES                   ║"
-echo "║                                                              ║"
 echo "║              Dashboard Interativo - Streamlit               ║"
-echo "║                                                              ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
-echo -e "${NC}"
-echo
+echo -e "${NC}\n"
 
-echo -e "${BLUE}Iniciando dashboard...${NC}"
-echo
+echo -e "${BLUE}Iniciando dashboard...${NC}\n"
 
-# Verifica se Python está instalado
-if ! command -v python3 &> /dev/null; then
-    if ! command -v python &> /dev/null; then
-        echo -e "${RED}ERRO: Python não encontrado!${NC}"
-        echo -e "${YELLOW}Instale Python 3.8+ em: https://python.org${NC}"
-        exit 1
-    else
-        PYTHON_CMD="python"
-    fi
-else
+# Verificação do Python
+if command -v python3 >/dev/null 2>&1; then
     PYTHON_CMD="python3"
-fi
-
-echo -e "${GREEN}OK: Python encontrado${NC}"
-echo
-
-# Verifica versão do Python
-PYTHON_VERSION=$($PYTHON_CMD --version 2>&1 | cut -d' ' -f2)
-echo -e "${BLUE}Versão do Python: $PYTHON_VERSION${NC}"
-
-# Executa o script de inicialização
-echo -e "${BLUE}Executando script de inicialização...${NC}"
-echo
-
-$PYTHON_CMD start_dashboard.py
-
-if [ $? -ne 0 ]; then
-    echo
-    echo -e "${RED}ERRO: Erro ao executar o dashboard${NC}"
-    echo -e "${YELLOW}Verifique os logs acima para mais detalhes${NC}"
+elif command -v python >/dev/null 2>&1; then
+    PYTHON_CMD="python"
+else
+    echo -e "${RED}ERRO: Python não encontrado${NC}"
+    echo -e "${YELLOW}Instale Python 3.8+: https://python.org${NC}"
     exit 1
 fi
 
-echo
-echo -e "${GREEN}OK: Dashboard finalizado${NC}"
+echo -e "${GREEN}Python encontrado: $($PYTHON_CMD --version)${NC}\n"
+
+# Execução
+echo -e "${BLUE}Executando dashboard...${NC}\n"
+$PYTHON_CMD start_dashboard.py
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Erro ao iniciar o dashboard${NC}"
+    echo -e "${YELLOW}Verifique os logs exibidos acima${NC}"
+    exit 1
+fi
+
+echo -e "\n${GREEN}Dashboard finalizado com sucesso${NC}"
