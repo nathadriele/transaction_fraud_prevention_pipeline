@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script de Deploy Automatizado - Sistema de Prevenção de Fraudes
-# Suporta deploy local, Docker e cloud
+# Suporta deploy local, Docker e cloud (AWS, GCP, Azure)
 
 set -e
 
@@ -14,22 +14,25 @@ NC='\033[0m' # No Color
 
 # Configurações
 ENVIRONMENT=${1:-local}
-VERSION=$(git describe --tags --always 2>/dev/null || echo "v1.0.0")
+CLOUD_PROVIDER=${2:-}
+VERSION=$(git describe --tags --always 2>/dev/null || echo "v1.0.1")
 PROJECT_NAME="fraud-prevention-system"
+PYTHON_BIN=${PYTHON_BIN:-python3}
+PIP_BIN=${PIP_BIN:-pip3}
 
 # Banner
 echo -e "${BLUE}"
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║                                                              ║"
-echo "║           DEPLOY - SISTEMA DE PREVENÇÃO DE FRAUDES          ║"
+echo "║           DEPLOY - SISTEMA DE PREVENÇÃO DE FRAUDES           ║"
 echo "║                                                              ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
 echo -e "${NC}"
 
 echo -e "${BLUE}Configurações do Deploy:${NC}"
 echo "   Ambiente: $ENVIRONMENT"
-echo "   Versão: $VERSION"
-echo "   Projeto: $PROJECT_NAME"
+echo "   Versão:   $VERSION"
+echo "   Projeto:  $PROJECT_NAME"
 echo
 
 # Função para verificar pré-requisitos
@@ -37,20 +40,20 @@ check_prerequisites() {
     echo -e "${BLUE}Verificando pré-requisitos...${NC}"
 
     # Verifica Python
-    if ! command -v python3 &> /dev/null; then
-        echo -e "${RED}ERRO: Python 3 não encontrado${NC}"
+    if ! command -v "$PYTHON_BIN" &> /dev/null; then
+        echo -e "${RED}ERRO: $PYTHON_BIN não encontrado${NC}"
         exit 1
     fi
-    echo -e "${GREEN}OK: Python 3 encontrado${NC}"
+    echo -e "${GREEN}OK: $PYTHON_BIN encontrado${NC}"
 
     # Verifica pip
-    if ! command -v pip &> /dev/null && ! command -v pip3 &> /dev/null; then
-        echo -e "${RED}ERRO: pip não encontrado${NC}"
+    if ! command -v "$PIP_BIN" &> /dev/null; then
+        echo -e "${RED}ERRO: $PIP_BIN não encontrado${NC}"
         exit 1
     fi
-    echo -e "${GREEN}OK: pip encontrado${NC}"
+    echo -e "${GREEN}OK: $PIP_BIN encontrado${NC}"
 
-    # Verifica Git
+    # Verifica Git (opcional)
     if ! command -v git &> /dev/null; then
         echo -e "${YELLOW}AVISO: Git não encontrado (opcional)${NC}"
     else
@@ -63,7 +66,7 @@ install_dependencies() {
     echo -e "${BLUE}Instalando dependências...${NC}"
 
     if [ -f "requirements.txt" ]; then
-        pip3 install -r requirements.txt
+        "$PIP_BIN" install -r requirements.txt
         echo -e "${GREEN}OK: Dependências instaladas${NC}"
     else
         echo -e "${RED}ERRO: Arquivo requirements.txt não encontrado${NC}"
@@ -73,27 +76,27 @@ install_dependencies() {
 
 # Função para executar testes
 run_tests() {
-    echo -e "${BLUE}Executando testes...${NC}"
+    echo -e "${BLUE}Executando testes automatizados...${NC}"
 
     if [ -d "tests" ]; then
-        python3 -m pytest tests/ -v || {
-            echo -e "${YELLOW}AVISO: Alguns testes falharam, mas continuando deploy...${NC}"
+        "$PYTHON_BIN" -m pytest tests/ -v || {
+            echo -e "${YELLOW}AVISO: Alguns testes falharam, mas o deploy continuará.${NC}"
         }
     else
         echo -e "${YELLOW}AVISO: Diretório de testes não encontrado${NC}"
     fi
 
-    # Testa importações básicas
-    python3 -c "
+    echo -e "${BLUE}Verificando importações básicas do dashboard...${NC}"
+    "$PYTHON_BIN" - << 'EOF'
 import sys
 sys.path.append('src')
 try:
-    from src.dashboard.app import load_final_results
+    from src.dashboard.app import load_final_results  # noqa: F401
     print('OK: Importações do dashboard OK')
 except Exception as e:
-    print(f'ERRO: Erro nas importações: {e}')
+    print(f'ERRO: Erro nas importações do dashboard: {e}')
     sys.exit(1)
-    "
+EOF
 }
 
 # Função para deploy local
@@ -105,11 +108,11 @@ deploy_local() {
     run_tests
 
     echo -e "${BLUE}Iniciando dashboard...${NC}"
-    echo -e "${GREEN}Dashboard será executado em: http://localhost:8501${NC}"
-    echo -e "${YELLOW}Para parar: Ctrl+C${NC}"
+    echo -e "${GREEN}Dashboard disponível em: http://localhost:8501${NC}"
+    echo -e "${YELLOW}Para encerrar, use Ctrl+C${NC}"
     echo
 
-    python3 start_dashboard.py
+    "$PYTHON_BIN" start_dashboard.py
 }
 
 # Função para deploy com Docker
@@ -124,33 +127,36 @@ deploy_docker() {
     echo -e "${GREEN}OK: Docker encontrado${NC}"
 
     # Build da imagem
-    echo -e "${BLUE}Building imagem Docker...${NC}"
+    echo -e "${BLUE}Build da imagem Docker...${NC}"
     docker build -t $PROJECT_NAME:$VERSION .
     docker tag $PROJECT_NAME:$VERSION $PROJECT_NAME:latest
     echo -e "${GREEN}OK: Imagem criada: $PROJECT_NAME:$VERSION${NC}"
 
-    # Para containers existentes
-    echo -e "${BLUE}Parando containers existentes...${NC}"
-    docker-compose down 2>/dev/null || true
+    # Para containers existentes (se houver docker-compose.yml)
+    if [ -f "docker-compose.yml" ]; then
+        echo -e "${BLUE}Parando containers existentes (docker-compose)...${NC}"
+        docker-compose down 2>/dev/null || true
 
-    # Inicia containers
-    echo -e "${BLUE}Iniciando containers...${NC}"
-    docker-compose up -d
+        echo -e "${BLUE}Iniciando containers com docker-compose...${NC}"
+        docker-compose up -d
 
-    # Aguarda inicialização
-    echo -e "${BLUE}Aguardando inicialização...${NC}"
-    sleep 10
+        echo -e "${BLUE}Aguardando inicialização...${NC}"
+        sleep 10
 
-    # Verifica status
-    if docker-compose ps | grep -q "Up"; then
-        echo -e "${GREEN}OK: Deploy Docker concluído com sucesso!${NC}"
-        echo -e "${GREEN}Dashboard disponível em: http://localhost:8501${NC}"
-        echo -e "${BLUE}Para ver logs: docker-compose logs -f${NC}"
-        echo -e "${BLUE}Para parar: docker-compose down${NC}"
+        if docker-compose ps | grep -q "Up"; then
+            echo -e "${GREEN}OK: Deploy Docker concluído com sucesso!${NC}"
+            echo -e "${GREEN}Dashboard disponível em: http://localhost:8501${NC}"
+            echo -e "${BLUE}Para ver logs: docker-compose logs -f${NC}"
+            echo -e "${BLUE}Para parar: docker-compose down${NC}"
+        else
+            echo -e "${RED}ERRO: Erro no deploy via docker-compose${NC}"
+            docker-compose logs || true
+            exit 1
+        fi
     else
-        echo -e "${RED}ERRO: Erro no deploy Docker${NC}"
-        docker-compose logs
-        exit 1
+        echo -e "${YELLOW}AVISO: docker-compose.yml não encontrado. Executando container simples.${NC}"
+        docker run -d -p 8501:8501 --name $PROJECT_NAME $PROJECT_NAME:latest
+        echo -e "${GREEN}Dashboard disponível em: http://localhost:8501${NC}"
     fi
 }
 
@@ -158,7 +164,7 @@ deploy_docker() {
 deploy_cloud() {
     echo -e "${BLUE}Deploy em Cloud...${NC}"
 
-    case $2 in
+    case "$CLOUD_PROVIDER" in
         "aws")
             deploy_aws
             ;;
@@ -180,57 +186,67 @@ deploy_cloud() {
 deploy_aws() {
     echo -e "${BLUE}Deploy AWS...${NC}"
 
-    # Verifica AWS CLI
     if ! command -v aws &> /dev/null; then
         echo -e "${RED}ERRO: AWS CLI não encontrado${NC}"
         exit 1
     fi
 
-    # Build e push para ECR
-    echo -e "${BLUE}Push para ECR...${NC}"
-    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
-    docker tag $PROJECT_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/$PROJECT_NAME:latest
-    docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/$PROJECT_NAME:latest
+    if [ -z "$AWS_ACCOUNT_ID" ]; then
+        echo -e "${RED}ERRO: Variável de ambiente AWS_ACCOUNT_ID não definida${NC}"
+        echo "Defina: export AWS_ACCOUNT_ID=SEU_ID_DE_CONTA_AWS"
+        exit 1
+    fi
 
-    echo -e "${GREEN}OK: Deploy AWS concluído${NC}"
+    local ECR_REPO="$AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/$PROJECT_NAME"
+
+    echo -e "${BLUE}Realizando login no ECR...${NC}"
+    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com"
+
+    echo -e "${BLUE}Build e push da imagem para ECR...${NC}"
+    docker build -t $PROJECT_NAME:$VERSION .
+    docker tag $PROJECT_NAME:$VERSION "$ECR_REPO:latest"
+    docker push "$ECR_REPO:latest"
+
+    echo -e "${GREEN}OK: Imagem publicada no ECR: $ECR_REPO:latest${NC}"
+    echo -e "${YELLOW}⚠ Deploy em ECS/EC2/EKS deve ser configurado separadamente.${NC}"
 }
 
 # Função para deploy GCP
 deploy_gcp() {
-    echo -e "${BLUE}Deploy GCP...${NC}"
+    echo -e "${BLUE}Deploy GCP (Cloud Run)...${NC}"
 
-    # Verifica gcloud
     if ! command -v gcloud &> /dev/null; then
         echo -e "${RED}ERRO: gcloud CLI não encontrado${NC}"
         exit 1
     fi
 
-    # Deploy para Cloud Run
-    gcloud run deploy $PROJECT_NAME \
+    gcloud run deploy "$PROJECT_NAME" \
         --source . \
         --platform managed \
         --region us-central1 \
         --allow-unauthenticated
 
     echo -e "${GREEN}OK: Deploy GCP concluído${NC}"
+    echo -e "${YELLOW}Consulte o Console GCP para obter a URL pública do serviço.${NC}"
 }
 
 # Função para deploy Azure
 deploy_azure() {
-    echo -e "${BLUE}Deploy Azure...${NC}"
+    echo -e "${BLUE}Deploy Azure (Container Instances)...${NC}"
 
-    # Verifica Azure CLI
     if ! command -v az &> /dev/null; then
         echo -e "${RED}ERRO: Azure CLI não encontrado${NC}"
         exit 1
     fi
 
-    # Deploy para Container Instances
+    # Aqui assumimos que a imagem $PROJECT_NAME:latest já existe localmente
+    echo -e "${YELLOW}⚠ Certifique-se de que a imagem $PROJECT_NAME:latest está publicada em um registry acessível pelo Azure.${NC}"
+
     az container create \
         --resource-group fraud-detection-rg \
-        --name $PROJECT_NAME \
-        --image $PROJECT_NAME:latest \
-        --dns-name-label $PROJECT_NAME-$(date +%s) \
+        --name "$PROJECT_NAME" \
+        --image "$PROJECT_NAME:latest" \
+        --dns-name-label "$PROJECT_NAME-$(date +%s)" \
         --ports 8501
 
     echo -e "${GREEN}OK: Deploy Azure concluído${NC}"
@@ -241,26 +257,26 @@ show_help() {
     echo "Uso: $0 [AMBIENTE] [OPÇÕES]"
     echo
     echo "Ambientes:"
-    echo "  local     Deploy local (padrão)"
-    echo "  docker    Deploy com Docker"
-    echo "  cloud     Deploy em cloud (requer provedor)"
+    echo "  local           Deploy local (padrão)"
+    echo "  docker          Deploy com Docker/Docker Compose"
+    echo "  cloud [prov]    Deploy em cloud (aws|gcp|azure)"
     echo
     echo "Exemplos:"
-    echo "  $0                    # Deploy local"
-    echo "  $0 local              # Deploy local"
-    echo "  $0 docker             # Deploy com Docker"
-    echo "  $0 cloud aws          # Deploy na AWS"
-    echo "  $0 cloud gcp          # Deploy no GCP"
-    echo "  $0 cloud azure        # Deploy no Azure"
+    echo "  $0                     # Deploy local"
+    echo "  $0 local               # Deploy local"
+    echo "  $0 docker              # Deploy com Docker"
+    echo "  $0 cloud aws           # Deploy na AWS"
+    echo "  $0 cloud gcp           # Deploy no GCP"
+    echo "  $0 cloud azure         # Deploy no Azure"
     echo
     echo "Opções:"
-    echo "  -h, --help           Mostra esta ajuda"
-    echo "  -v, --version        Mostra versão"
+    echo "  -h, --help             Mostra esta ajuda"
+    echo "  -v, --version          Mostra versão do script"
 }
 
 # Função principal
 main() {
-    case $ENVIRONMENT in
+    case "$ENVIRONMENT" in
         "local")
             deploy_local
             ;;
@@ -268,13 +284,13 @@ main() {
             deploy_docker
             ;;
         "cloud")
-            deploy_cloud $@
+            deploy_cloud
             ;;
         "-h"|"--help")
             show_help
             ;;
         "-v"|"--version")
-            echo "Deploy Script v1.0.0"
+            echo "Deploy Script - versão ${VERSION}"
             ;;
         *)
             echo -e "${RED}ERRO: Ambiente inválido: $ENVIRONMENT${NC}"
@@ -288,4 +304,4 @@ main() {
 trap 'echo -e "\n${YELLOW}Deploy interrompido pelo usuário${NC}"; exit 130' INT TERM
 
 # Executa função principal
-main $@
+main "$@"
