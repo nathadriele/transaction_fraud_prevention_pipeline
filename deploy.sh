@@ -5,14 +5,12 @@
 
 set -e
 
-# Cores para output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-# Configurações
 ENVIRONMENT=${1:-local}
 CLOUD_PROVIDER=${2:-}
 VERSION=$(git describe --tags --always 2>/dev/null || echo "v1.0.1")
@@ -20,7 +18,6 @@ PROJECT_NAME="fraud-prevention-system"
 PYTHON_BIN=${PYTHON_BIN:-python3}
 PIP_BIN=${PIP_BIN:-pip3}
 
-# Banner
 echo -e "${BLUE}"
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║                                                              ║"
@@ -35,25 +32,21 @@ echo "   Versão:   $VERSION"
 echo "   Projeto:  $PROJECT_NAME"
 echo
 
-# Função para verificar pré-requisitos
 check_prerequisites() {
     echo -e "${BLUE}Verificando pré-requisitos...${NC}"
 
-    # Verifica Python
     if ! command -v "$PYTHON_BIN" &> /dev/null; then
         echo -e "${RED}ERRO: $PYTHON_BIN não encontrado${NC}"
         exit 1
     fi
     echo -e "${GREEN}OK: $PYTHON_BIN encontrado${NC}"
 
-    # Verifica pip
     if ! command -v "$PIP_BIN" &> /dev/null; then
         echo -e "${RED}ERRO: $PIP_BIN não encontrado${NC}"
         exit 1
     fi
     echo -e "${GREEN}OK: $PIP_BIN encontrado${NC}"
 
-    # Verifica Git (opcional)
     if ! command -v git &> /dev/null; then
         echo -e "${YELLOW}AVISO: Git não encontrado (opcional)${NC}"
     else
@@ -61,7 +54,6 @@ check_prerequisites() {
     fi
 }
 
-# Função para instalar dependências
 install_dependencies() {
     echo -e "${BLUE}Instalando dependências...${NC}"
 
@@ -74,7 +66,6 @@ install_dependencies() {
     fi
 }
 
-# Função para executar testes
 run_tests() {
     echo -e "${BLUE}Executando testes automatizados...${NC}"
 
@@ -99,7 +90,6 @@ except Exception as e:
 EOF
 }
 
-# Função para deploy local
 deploy_local() {
     echo -e "${BLUE}Deploy Local...${NC}"
 
@@ -115,24 +105,20 @@ deploy_local() {
     "$PYTHON_BIN" start_dashboard.py
 }
 
-# Função para deploy com Docker
 deploy_docker() {
     echo -e "${BLUE}Deploy com Docker...${NC}"
 
-    # Verifica Docker
     if ! command -v docker &> /dev/null; then
         echo -e "${RED}ERRO: Docker não encontrado${NC}"
         exit 1
     fi
     echo -e "${GREEN}OK: Docker encontrado${NC}"
 
-    # Build da imagem
     echo -e "${BLUE}Build da imagem Docker...${NC}"
     docker build -t $PROJECT_NAME:$VERSION .
     docker tag $PROJECT_NAME:$VERSION $PROJECT_NAME:latest
     echo -e "${GREEN}OK: Imagem criada: $PROJECT_NAME:$VERSION${NC}"
 
-    # Para containers existentes (se houver docker-compose.yml)
     if [ -f "docker-compose.yml" ]; then
         echo -e "${BLUE}Parando containers existentes (docker-compose)...${NC}"
         docker-compose down 2>/dev/null || true
@@ -160,7 +146,6 @@ deploy_docker() {
     fi
 }
 
-# Função para deploy em cloud
 deploy_cloud() {
     echo -e "${BLUE}Deploy em Cloud...${NC}"
 
@@ -182,7 +167,6 @@ deploy_cloud() {
     esac
 }
 
-# Função para deploy AWS
 deploy_aws() {
     echo -e "${BLUE}Deploy AWS...${NC}"
 
@@ -211,7 +195,6 @@ deploy_aws() {
     echo -e "${YELLOW}⚠ Deploy em ECS/EC2/EKS deve ser configurado separadamente.${NC}"
 }
 
-# Função para deploy GCP
 deploy_gcp() {
     echo -e "${BLUE}Deploy GCP (Cloud Run)...${NC}"
 
@@ -230,7 +213,6 @@ deploy_gcp() {
     echo -e "${YELLOW}Consulte o Console GCP para obter a URL pública do serviço.${NC}"
 }
 
-# Função para deploy Azure
 deploy_azure() {
     echo -e "${BLUE}Deploy Azure (Container Instances)...${NC}"
 
@@ -239,7 +221,6 @@ deploy_azure() {
         exit 1
     fi
 
-    # Aqui assumimos que a imagem $PROJECT_NAME:latest já existe localmente
     echo -e "${YELLOW}⚠ Certifique-se de que a imagem $PROJECT_NAME:latest está publicada em um registry acessível pelo Azure.${NC}"
 
     az container create \
@@ -252,7 +233,6 @@ deploy_azure() {
     echo -e "${GREEN}OK: Deploy Azure concluído${NC}"
 }
 
-# Função para mostrar ajuda
 show_help() {
     echo "Uso: $0 [AMBIENTE] [OPÇÕES]"
     echo
@@ -274,7 +254,6 @@ show_help() {
     echo "  -v, --version          Mostra versão do script"
 }
 
-# Função principal
 main() {
     case "$ENVIRONMENT" in
         "local")
@@ -300,8 +279,6 @@ main() {
     esac
 }
 
-# Tratamento de sinais
 trap 'echo -e "\n${YELLOW}Deploy interrompido pelo usuário${NC}"; exit 130' INT TERM
 
-# Executa função principal
 main "$@"
