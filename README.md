@@ -1,4 +1,4 @@
-## Sistema de Prevenção de Fraudes Transacionais v.1.0.1
+## Transactional Fraud Prevention System v.1.0.1
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)
@@ -13,197 +13,195 @@
 ![MIT License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Status](https://img.shields.io/badge/Status-In%20development-yellow.svg)
 
-O projeto, além de ter como intuito principal o aprendizado e a realização de testes, também busca oferecer uma solução completa para detecção e prevenção de fraudes em transações financeiras, integrando Machine Learning, regras de negócio e análises estatísticas avançadas. A solução inclui um dashboard interativo para monitoramento em tempo real, análise exploratória e gestão de alertas.
+The project, in addition to its primary goal of learning and experimentation, also aims to provide a comprehensive solution for the detection and prevention of fraud in financial transactions, integrating Machine Learning, business rules, and advanced statistical analyses. The solution includes an interactive dashboard for real-time monitoring, exploratory analysis, and alert management.
 
-## Sobre o Projeto
+## About the Project
+This system is being developed to detect and prevent fraud in financial transactions with high accuracy, reducing false positives while maintaining a seamless experience for legitimate users. The solution integrates multiple technologies and approaches:
 
-Este sistema está sendo desenvolvido para detectar e prevenir fraudes em transações financeiras com alta precisão, reduzindo falsos positivos e mantendo uma experiência fluida para usuários legítimos. A solução integra múltiplas tecnologias e abordagens:
+- Supervised and unsupervised Machine Learning models
+- Customizable and dynamic business rules engine
+- Advanced statistical and exploratory analyses
+- Interactive web dashboard for monitoring and management
+- Automated data pipeline for real-time processing
+- Intelligent alert system with different priority levels
 
-- **Modelos de Machine Learning** supervisionados e não supervisionados
-- **Engine de regras de negócio** customizáveis e dinâmicas
-- **Análises estatísticas** e exploratórias avançadas
-- **Dashboard web interativo** para monitoramento e gestão
-- **Pipeline de dados** automatizado para processamento em tempo real
-- **Sistema de alertas** inteligente com diferentes níveis de prioridade
+## Visual Demonstration of the System
+The system provides a complete and intuitive web interface through a Streamlit dashboard. Below are the main screens and functionalities:
 
-## Demonstração Visual do Sistema
-
-O sistema oferece uma interface web completa e intuitiva através de um dashboard Streamlit. Abaixo estão as principais telas e funcionalidades:
-
-### 1. Execução
+### 1. Execution
 
 ![Tela Principal](images/image_1.png)
 
-- Verificação de dependências concluída: Todas as bibliotecas necessárias (Streamlit, Pandas, NumPy, Plotly, Scikit-learn) estão instaladas.
-- Arquivos de dados localizados com sucesso: Os arquivos .csv e .json exigidos pelo dashboard foram encontrados na pasta data/.
-- Dashboard iniciado com sucesso via Streamlit: O comando streamlit run src/dashboard/app.py foi executado corretamente.
-- Acesso local ao dashboard: O dashboard foi aberto automaticamente no navegador em http://localhost:8501.
-- Documentação disponível: A documentação técnica está localizada em docs/TECHNICAL_DOCUMENTATION.md.
+- Dependency check completed: All required libraries (Streamlit, Pandas, NumPy, Plotly, Scikit-learn) are installed.
+- Data files successfully located: The required .csv and .json files for the dashboard were found in the data/ directory.
+- Dashboard successfully launched via Streamlit: The command streamlit run src/dashboard/app.py was executed correctly.
+- Local access to the dashboard: The dashboard was automatically opened in the browser at http://localhost:8501.
+- Documentation available: The technical documentation is located at docs/TECHNICAL_DOCUMENTATION.md.
 
-### 2. Dashboard de Monitoramento em Tempo Real
+### 2. Real-Time Monitoring Dashboard
 
 ![Dashboard de Monitoramento](images/image_2.png)
 
-O dashboard de monitoramento exibe:
-- Métricas de performance dos modelos de detecção
-- Gráficos de transações em tempo real
-- Indicadores de alertas ativos e pendentes
-- Distribuição geográfica das transações
-- Timeline de eventos de fraude detectados
+The monitoring dashboard displays:
+- Model performance metrics for fraud detection
+- Real-time transaction charts
+- Indicators of active and pending alerts
+- Geographic distribution of transactions
+- Timeline of detected fraud events
 
-### 3. Análise Exploratória de Dados
+### 3. Exploratory Data Analysis
 
 ![Análise de Dados](images/image_3.png)
 
-A seção de análise de dados oferece:
-- Gráficos interativos de distribuição de valores de transação
-- Análise temporal de padrões de fraude
-- Correlações entre diferentes variáveis
-- Estatísticas descritivas detalhadas
-- Visualizações de outliers e anomalias
+The data analysis section offers:
+- Interactive charts showing the distribution of transaction values
+- Temporal analysis of fraud patterns
+- Correlations between different variables
+- Detailed descriptive statistics
+- Visualizations of outliers and anomalies
 
-### 4. Análise por Categoria de Comerciante
+### 4. Analysis by Merchant Category
 
 ![Análise por Categoria](images/image_4.png)
 
-Esta tela apresenta:
-- Distribuição de fraudes por categoria de estabelecimento
-- Taxa de fraude específica para cada tipo de comerciante
-- Gráficos de barras comparativos
-- Insights sobre categorias de maior risco
-- Recomendações baseadas nos padrões identificados
+This screen presents:
+- Distribution of fraud cases by merchant category
+- Fraud rate specific to each type of merchant
+- Comparative bar charts
+- Insights into higher-risk categories
+- Recommendations based on the identified patterns
 
-### 5. Análise Temporal e Padrões
+### 5. Temporal Analysis and Patterns
 
 ![Análise Temporal](images/image_5.png)
 
-A análise temporal mostra:
-- Padrões de fraude ao longo do tempo
-- Sazonalidade e tendências
-- Horários de pico para atividades fraudulentas
-- Comparação entre períodos
-- Previsões baseadas em dados históricos
+The temporal analysis shows:
+- Fraud patterns over time
+- Seasonality and trends
+- Peak times for fraudulent activity
+- Comparisons between periods
+- Forecasts based on historical data
 
-### 6. Modelos de Machine Learning
+### 6. Machine Learning Models
 
 ![Modelos ML](images/image_6.png)
 
-A seção de modelos apresenta:
-- Performance comparativa entre diferentes algoritmos
-- Métricas de precisão, recall e F1-score
-- Curvas ROC e Precision-Recall
-- Importância das features para cada modelo
-- Configurações e parâmetros dos modelos treinados
+The models section presents:
+- Comparative performance across different algorithms
+- Precision, recall, and F1-score metrics
+- ROC and Precision–Recall curves
+- Feature importance for each model
+- Configurations and parameters of the trained models
 
-### 7. Sistema de Regras de Negócio
+### 7. Business Rules System
 
 ![Regras de Negócio](images/image_7.png)
 
-O sistema de regras oferece:
-- Interface para criação e edição de regras customizadas
-- Lógica condicional para diferentes cenários
-- Thresholds configuráveis para alertas
-- Histórico de aplicação das regras
-- Validação e teste de novas regras
+The rules system offers:
+- An interface for creating and editing custom rules
+- Conditional logic for different scenarios
+- Configurable thresholds for alerts
+- History of rule application
+- Validation and testing of new rules
 
-### 8. Gestão de Alertas
+### 8. Alert Management
 
 ![Sistema de Alertas](images/image_8.png)
 
-O sistema de alertas inclui:
-- Lista de alertas ativos com diferentes prioridades
-- Filtros por status, tipo e período
-- Detalhes de cada alerta com contexto da transação
-- Ações disponíveis para cada alerta
-- Histórico de resoluções e feedback
+The alert system includes:
+- A list of active alerts with different priority levels
+- Filters by status, type, and time period
+- Detailed view of each alert with transaction context
+- Available actions for each alert
+- Resolution history and feedback
 
-### 9. Análise Geográfica
+### 9. Geographic Analysis
 
 ![Análise Geográfica](images/image_9.png)
 
-A análise geográfica mostra:
-- Mapa de distribuição de transações por país/região
-- Identificação de padrões geográficos suspeitos
-- Taxa de fraude por localização
-- Alertas para transações em locais incomuns
-- Visualização de rotas de transações suspeitas
+The geographic analysis shows:
+- Map of transaction distribution by country/region
+- Identification of suspicious geographic patterns
+- Fraud rate by location
+- Alerts for transactions in unusual locations
+- Visualization of suspicious transaction routes
 
-### 10. Configurações do Sistema
+### 10. System Settings
 
 ![Configurações](images/image_10.png)
 
-A tela de configurações permite:
-- Upload de novos datasets para análise
-- Configuração de parâmetros dos modelos
-- Ajuste de thresholds de detecção
-- Configuração de notificações e alertas
-- Backup e restore de configurações
+The settings screen allows:
+- Uploading new datasets for analysis
+- Configuration of model parameters
+- Adjustment of detection thresholds
+- Configuration of notifications and alerts
+- Backup and restore of settings
 
-### 11. Relatórios e Métricas Detalhadas
+### 11. Reports and Detailed Metrics
 
 ![Relatórios](images/image_11.png)
 
-Os relatórios incluem:
-- Métricas de performance detalhadas do modelo
-- Análise aprofundada de falsos positivos e falsos negativos
-- Identificação de tendências de longo prazo
-- Comparações entre diferentes períodos de observação
-- Exportação dos resultados para análises externas
+The reports include:
+- Detailed model performance metrics
+- In-depth analysis of false positives and false negatives
+- Identification of long-term trends
+- Comparisons across different observation periods
+- Export of results for external analysis
 
-### 12. Análise de Transações Individuais
+### 12. Individual Transaction Analysis
 
 ![Detalhes de Transação](images/image_12.png)
 
-A análise individual mostra:
-- Detalhes completos de cada transação
-- Score de risco calculado pelos modelos
-- Fatores que contribuíram para a classificação
-- Histórico do usuário e padrões comportamentais
-- Ações recomendadas baseadas na análise
+The individual analysis shows:
+- Complete details of each transaction
+- Risk score calculated by the models
+- Factors that contributed to the classification
+- User history and behavioral patterns
+- Recommended actions based on the analysis
 
-### 13. Dashboard Executivo
+### 13. Executive Dashboard
 
 ![Dashboard Executivo](images/image_13.png)
 
-O dashboard executivo apresenta:
-- KPIs principais para suporte à gestão
-- Resumo consolidado da performance do sistema
-- Estimativa do impacto financeiro obtido na prevenção de fraudes
-- Tendências identificadas e projeções futuras
-- Recomendações estratégicas para tomada de decisão
+The executive dashboard presents:
+- Key KPIs to support management
+- Consolidated summary of system performance
+- Estimated financial impact achieved through fraud prevention
+- Identified trends and future projections
+- Strategic recommendations for decision-making
 
-### 14. Interface de Navegação e Menu
+### 14. Navigation Interface and Menu
 
 ![Interface de Navegação](images/image_14.png)
 
-A interface de navegação oferece:
-- Menu lateral intuitivo para acesso rápido
-- Status em tempo real do sistema
-- Informações de conectividade e performance
-- Links para documentação e suporte
-- Indicadores visuais de status e alertas
+The navigation interface offers:
+- An intuitive sidebar menu for quick access
+- Real-time system status
+- Connectivity and performance information
+- Links to documentation and support
+- Visual indicators of system status and alerts
 
-## Instalação e Execução
+## Installation and Execution
 
-### Método 1: Script Automático (Recomendado)
+### Method 1: Automated Script (Recommended)
 
 ```bash
-# Clone o repositório
+# Clone the repository
 git clone https://github.com/nathadriele/transaction_fraud_prevention_pipeline
 cd transacional_fraud_prevention_pipeline
 
-# Execute o script de inicialização automática
+# Run the automated initialization script
 python start_dashboard.py
 ```
 
-O script automático irá:
-- Verificar a versão do Python
-- Instalar dependências ausentes
-- Configurar o ambiente
-- Iniciar o dashboard automaticamente
-- Abrir o navegador na URL correta
+The automated script will:
+- Check the Python version
+- Install missing dependencies
+- Configure the environment
+- Automatically start the dashboard
+- Open the browser at the correct URL
 
-### Método 2: Docker
+### Method 2: Docker
 
 ```bash
 # Build e execução com Docker Compose
@@ -212,7 +210,7 @@ docker-compose up -d
 # Acesse: http://localhost:8501
 ```
 
-### Método 3: Instalação Manual
+### Method 3: Manual Installation
 
 ```bash
 # Instale as dependências
@@ -225,25 +223,7 @@ cp config/config.example.yaml config/config.yaml
 streamlit run src/dashboard/app.py
 ```
 
-**Dashboard disponível em: http://localhost:8501**
-
-## Arquitetura Básica do Sistema
-
-```
-├── src/                    # Código fonte principal
-│   ├── data/              # Módulos de dados e ETL
-│   ├── models/            # Modelos de ML e regras
-│   ├── features/          # Engenharia de features
-│   ├── evaluation/        # Métricas e validação
-│   └── dashboard/         # Interface Streamlit
-├── notebooks/             # Análises exploratórias
-├── data/                  # Dados (raw, processed, synthetic)
-├── models/                # Modelos treinados
-├── config/                # Configurações
-├── tests/                 # Testes unitários
-├── images/                # Screenshots do sistema
-└── docs/                  # Documentação
-```
+**Dashboard available at: http://localhost:8501**
 
 ## Principais Funcionalidades
 
