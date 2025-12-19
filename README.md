@@ -213,242 +213,221 @@ docker-compose up -d
 ### Method 3: Manual Installation
 
 ```bash
-# Instale as dependências
+# Install the dependencies
 pip install -r requirements.txt
 
-# Configure o ambiente
+# Set up the environment
 cp config/config.example.yaml config/config.yaml
 
-# Execute o dashboard
+# Run the dashboard
 streamlit run src/dashboard/app.py
 ```
 
 **Dashboard available at: http://localhost:8501**
 
-## Principais Funcionalidades
+### Key Features
+#### Fraud Detection
+- Supervised Models: Random Forest, XGBoost, Logistic Regression
+- Anomaly Detection: Isolation Forest, Local Outlier Factor
+- Behavioral Analysis: User and transaction patterns
+- Real-Time Scoring: Instant risk classification
+- Model Ensemble: Intelligent combination of multiple algorithms
 
-### Detecção de Fraudes
-- **Modelos Supervisionados**: Random Forest, XGBoost, Logistic Regression
-- **Detecção de Anomalias**: Isolation Forest, Local Outlier Factor
-- **Análise Comportamental**: Padrões de usuário e transações
-- **Scoring em Tempo Real**: Classificação instantânea de risco
-- **Ensemble de Modelos**: Combinação inteligente de múltiplos algoritmos
+#### Business Rules System
+- Customizable Engine: Creation of business-specific rules
+- Smart Alerts: Based on dynamic thresholds
+- Conditional Logic: Complex rules with multiple conditions
+- Exception Management: Handling of special cases
+- Automated Validation: Testing the effectiveness of rules
 
-### Sistema de Regras de Negócio
-- **Engine Customizável**: Criação de regras específicas do negócio
-- **Alertas Inteligentes**: Baseados em thresholds dinâmicos
-- **Lógica Condicional**: Regras complexas com múltiplas condições
-- **Gestão de Exceções**: Tratamento de casos especiais
-- **Validação Automática**: Teste de eficácia das regras
+#### Dashboard and Monitoring
+- Interactive Web Interface: Responsive Streamlit dashboard
+- Real-Time Metrics: Automatically updated KPIs
+- Advanced Visualizations: Interactive charts with Plotly
+- Exploratory Analysis: Data investigation tools
+- Executive Reports: Summaries for decision-making
 
-### Dashboard e Monitoramento
-- **Interface Web Interativa**: Dashboard Streamlit responsivo
-- **Métricas em Tempo Real**: KPIs atualizados automaticamente
-- **Visualizações Avançadas**: Gráficos interativos com Plotly
-- **Análise Exploratória**: Ferramentas de investigação de dados
-- **Relatórios Executivos**: Resumos para tomada de decisão
+#### Data Pipeline
+- Synthetic Data Generation: Creation of realistic datasets
+- Automated Preprocessing: Data cleaning and transformation
+- Feature Engineering: Creation of predictive variables
+- Quality Validation: Data integrity checks
+- Automated ETL: Extraction, transformation, and loading
 
-### Pipeline de Dados
-- **Geração de Dados Sintéticos**: Criação de datasets realistas
-- **Preprocessamento Automático**: Limpeza e transformação de dados
-- **Feature Engineering**: Criação de variáveis preditivas
-- **Validação de Qualidade**: Verificação de integridade dos dados
-- **ETL Automatizado**: Extração, transformação e carregamento
+#### Alert System
+- Priority Classification: Critical, High, Medium, Low
+- Real-Time Notifications: Instant alerts
+- Workflow Management: Resolution tracking
+- Complete History: Full traceability of all actions
+- External Integration: APIs for third-party systems
 
-### Sistema de Alertas
-- **Classificação por Prioridade**: Crítico, Alto, Médio, Baixo
-- **Notificações em Tempo Real**: Alertas instantâneos
-- **Gestão de Workflow**: Acompanhamento de resolução
-- **Histórico Completo**: Rastreabilidade de todas as ações
-- **Integração Externa**: APIs para sistemas terceiros
+### Technologies Used
+#### Core
+- Python 3.9+ – Primary programming language
+- Streamlit – Web dashboard framework
+- Docker – Containerization and deployment
 
-## Tecnologias Utilizadas
+#### Machine Learning
+- scikit-learn – Classical ML algorithms
+- XGBoost – Optimized gradient boosting
+- TensorFlow – Deep learning and neural networks
+- imbalanced-learn – Handling imbalanced datasets
 
-### Core
-- **Python 3.9+** - Linguagem principal
-- **Streamlit** - Framework para dashboard web
-- **Docker** - Containerização e deployment
+#### Data Analysis
+- pandas – Structured data manipulation
+- numpy – Numerical computing
+- scipy – Advanced statistical analysis
+- matplotlib/seaborn – Static visualizations
 
-### Machine Learning
-- **scikit-learn** - Algoritmos de ML clássicos
-- **XGBoost** - Gradient boosting otimizado
-- **TensorFlow** - Deep learning e redes neurais
-- **imbalanced-learn** - Tratamento de dados desbalanceados
+#### Visualization
+- Plotly – Interactive charts
+- Streamlit – Responsive web interface
+- Jupyter – Notebooks for exploratory analysis
 
-### Análise de Dados
-- **pandas** - Manipulação de dados estruturados
-- **numpy** - Computação numérica
-- **scipy** - Análises estatísticas avançadas
-- **matplotlib/seaborn** - Visualizações estáticas
+#### Development
+- pytest – Testing framework
+- black – Code formatting
+- flake8 – Linting and code quality
+- pre-commit – Validation hooks
 
-### Visualização
-- **Plotly** - Gráficos interativos
-- **Streamlit** - Interface web responsiva
-- **Jupyter** - Notebooks para análise exploratória
+### How to Use the System
+#### 1. Accessing the Dashboard
+- After installation, go to http://localhost:8501 to open the main dashboard.
 
-### Desenvolvimento
-- **pytest** - Framework de testes
-- **black** - Formatação de código
-- **flake8** - Linting e qualidade de código
-- **pre-commit** - Hooks de validação
+#### 2. Navigation
+- Use the sidebar menu to navigate between the different sections:
+- Overview: Key metrics and system status
+- Data Analysis: Data exploration and visualization
+- ML Models: Model performance and configuration
+- Rules: Business rules management
+- Alerts: Alert monitoring and management
+- Settings: Configuration and data upload
 
-## Como Usar o Sistema
+#### 3. Transaction Analysis
+- View transactions in real time
+- Analyze patterns and trends
+- Identify anomalies and fraud
+- Configure custom alerts
 
-### 1. Acesso ao Dashboard
-Após a instalação, acesse `http://localhost:8501` para abrir o dashboard principal.
+#### 4. Model Management
+- Compare performance across models
+- Adjust parameters and thresholds
+- Retrain models with new data
+- Monitor drift and degradation
 
-### 2. Navegação
-Use o menu lateral para navegar entre as diferentes seções:
-- **Visão Geral**: Métricas principais e status do sistema
-- **Análise de Dados**: Exploração e visualização de dados
-- **Modelos ML**: Performance e configuração dos modelos
-- **Regras**: Gestão de regras de negócio
-- **Alertas**: Monitoramento e gestão de alertas
-- **Configurações**: Ajustes e upload de dados
+#### 5. Rules Configuration
+- Create custom business rules
+- Define conditions and actions
+- Test rules before deployment
+- Monitor rule effectiveness
 
-### 3. Análise de Transações
-- Visualize transações em tempo real
-- Analise padrões e tendências
-- Identifique anomalias e fraudes
-- Configure alertas personalizados
+### Analysis Notebooks
+The project includes Jupyter notebooks for exploratory analysis:
 
-### 4. Gestão de Modelos
-- Compare performance entre modelos
-- Ajuste parâmetros e thresholds
-- Retreine modelos com novos dados
-- Monitore drift e degradação
-
-### 5. Configuração de Regras
-- Crie regras customizadas de negócio
-- Defina condições e ações
-- Teste regras antes da implementação
-- Monitore eficácia das regras
-
-## Notebooks de Análise
-
-O projeto inclui notebooks Jupyter para análise exploratória:
-
-### 1. Análise Exploratória de Dados
-```bash
+#### 1. Exploratory Data Analysis
 jupyter notebook notebooks/01_exploratory_data_analysis.ipynb
-```
-- Estatísticas descritivas
-- Visualizações de distribuições
-- Análise de correlações
-- Identificação de padrões
 
-### 2. Modelagem de Fraudes
-```bash
+- Descriptive statistics
+- Distribution visualizations
+- Correlation analysis
+- Pattern identification
+
+#### 2. Fraud Modeling
 jupyter notebook notebooks/02_fraud_detection_modeling.ipynb
-```
-- Treinamento de modelos
-- Validação cruzada
-- Otimização de hiperparâmetros
-- Avaliação de performance
 
-### 3. Demonstração do Sistema
-```bash
+- Model training
+- Cross-validation
+- Hyperparameter optimization
+- Performance evaluation
+
+#### 3. System Demonstration
 jupyter notebook notebooks/03_fraud_prevention_demo.ipynb
-```
-- Casos de uso práticos
-- Simulações de cenários
-- Exemplos de implementação
-- Testes de integração
 
-## Testes e Qualidade
+- Practical use cases
+- Scenario simulations
+- Implementation examples
+- Integration tests
 
-### Execução de Testes
-```bash
-# Execute todos os testes
+### Testing and Quality
+Running Tests
+#### Run all tests
 pytest tests/
 
-# Execute com coverage
+#### Run with coverage
 pytest tests/ --cov=src --cov-report=html
 
-# Testes específicos
+#### Specific tests
 pytest tests/test_business_rules.py
 pytest tests/test_data_loader.py
-```
 
-### Métricas de Performance
-- **Precision**: > 95%
-- **Recall**: > 90%
-- **F1-Score**: > 92%
-- **False Positive Rate**: < 2%
-- **Latência**: < 100ms
-- **Throughput**: > 1000 transações/segundo
+- Performance Metrics
+- Precision: > 95%
+- Recall: > 90%
+- F1-Score: > 92%
+- False Positive Rate: < 2%
+- Latency: < 100 ms
+- Throughput: > 1,000 transactions/second
 
-## Documentação Técnica
+### Technical Documentation
+Available Guides
 
-### Guias Disponíveis
-- [Guia de Deploy](docs/DEPLOYMENT_GUIDE.md) - Instruções completas de deployment
-- [Documentação Técnica](docs/TECHNICAL_DOCUMENTATION.md) - Arquitetura e implementação
-- [Configurações](config/) - Arquivos de configuração do sistema
-- [Notebooks](notebooks/) - Análises exploratórias e modelagem
+- Deployment Guide
+ – Complete deployment instructions
 
-### Estrutura de Dados
-O sistema trabalha com os seguintes tipos de dados:
-- **Transações**: Dados de transações financeiras
-- **Usuários**: Informações de perfil e comportamento
-- **Alertas**: Registros de eventos suspeitos
-- **Modelos**: Métricas e configurações de ML
-- **Regras**: Definições de regras de negócio
+- Technical Documentation
+ – Architecture and implementation
 
-### APIs e Integrações
-- **REST API**: Endpoints para integração externa
-- **Webhooks**: Notificações em tempo real
-- **Batch Processing**: Processamento em lote
-- **Stream Processing**: Análise de dados em tempo real
+- Configurations
+ – System configuration files
 
-## Casos de Uso
+- Notebooks
+ – Exploratory analysis and modeling
 
-### 1. Detecção em Tempo Real
-- Análise imediata de transações em execução
-- Bloqueio automático de atividades potencialmente fraudulentas
-- Notificações instantâneas para as equipes responsáveis
+### Data Structure
+- The system works with the following data types:
+   - Transactions: Financial transaction data
+   - Users: Profile and behavioral information
+   - Alerts: Records of suspicious events
+   - Models: ML metrics and configurations
+   - Rules: Business rule definitions
 
-### 2. Análise Investigativa
-- Investigação de padrões suspeitos
-- Análise forense de fraudes
-- Relatórios detalhados para auditoria
+### APIs and Integrations
+   - REST API: Endpoints for external integration
+   - Webhooks: Real-time notifications
+   - Batch Processing: Batch processing
+   - Stream Processing: Real-time data analysis
 
-### 3. Gestão de Risco
-- Monitoramento de KPIs de risco
-- Ajuste de políticas de segurança
-- Otimização de regras de negócio
+### Use Cases
+#### 1. Real-Time Detection
+   - Immediate analysis of ongoing transactions
+   - Automatic blocking of potentially fraudulent activities
+   - Instant notifications to responsible teams
+#### 2. Investigative Analysis
+   - Investigation of suspicious patterns
+   - Forensic fraud analysis
+   - Detailed reports for auditing
+#### 3. Risk Management
+   - Monitoring risk KPIs
+   - Adjustment of security policies
+   - Optimization of business rules
+#### 4. Compliance and Auditing
+   - Full traceability of decisions
+   - Reports for regulatory bodies
+   - Process documentation
 
-### 4. Compliance e Auditoria
-- Rastreabilidade completa de decisões
-- Relatórios para órgãos reguladores
-- Documentação de processos
+### Contribution
+#### How to Contribute
+- Fork the project
+- Create a branch for your feature (git checkout -b feature/NewFeature)
+- Commit your changes (git commit -m 'Add new feature')
+- Push to the branch (git push origin feature/NewFeature)
+- Open a Pull Request
 
-## Contribuição
+### Project Status
+- Current Version: 1.0.1
+- Status: Under update / maintenance
 
-### Como Contribuir
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/NovaFuncionalidade`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/NovaFuncionalidade`)
-5. Abra um Pull Request
+### Last Update: 19/12/2025
 
-### Padrões de Desenvolvimento
-- Siga as convenções PEP 8 para Python
-- Adicione testes para novas funcionalidades
-- Documente mudanças no README
-- Use commits semânticos
-
-### Reportar Issues
-- Use templates de issue disponíveis
-- Inclua logs e screenshots quando relevante
-- Descreva passos para reproduzir problemas
-- Sugira soluções quando possível
-
-### Status do Projeto
-- **Versão Atual**: 1.0.1
-- **Status**: Em atualização / manutenção
-- **Última Atualização**: 21/11/2025
-- **Próxima Release**: A definir
-
----
 
 **Sistema de Prevenção de Fraudes** - Protegendo transações financeiras com inteligência artificial e análise avançada de dados. **Desenvolvido principalmente com foco no aprendizado**.
